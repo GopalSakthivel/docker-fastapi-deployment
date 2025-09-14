@@ -24,10 +24,13 @@ jobs:
       env:
         GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
 
-    - name: Build Docker image
+    - name: Build Docker images
       run: |
-        docker build -t ghcr.io/${USERNAME_LC}/fastapi-ml-app:latest .
+        # Tag with 'latest' and commit SHA
+        docker build -t ghcr.io/${USERNAME_LC}/fastapi-ml-app:latest \
+                     -t ghcr.io/${USERNAME_LC}/fastapi-ml-app:${GITHUB_SHA} .
 
-    - name: Push Docker image to GHCR
+    - name: Push Docker images to GHCR
       run: |
         docker push ghcr.io/${USERNAME_LC}/fastapi-ml-app:latest
+        docker push ghcr.io/${USERNAME_LC}/fastapi-ml-app:${GITHUB_SHA}
