@@ -1,4 +1,4 @@
-name: CI/CD - Build, Push & Test Docker Image
+name: CI/CD - Docker Build & Push (Local Pre-trained Model)
 
 on:
   push:
@@ -36,13 +36,10 @@ jobs:
 
     - name: Test Docker container
       run: |
-        # Run container in background
         docker run -d -p 8000:8000 --name test-container ghcr.io/${USERNAME_LC}/fastapi-ml-app:latest
-        sleep 10  # wait for FastAPI to start
-        # Call predict endpoint
+        sleep 10
         curl -X POST "http://localhost:8000/predict" \
              -H "Content-Type: application/json" \
              -d '{"features":[5.1,3.5,1.4,0.2]}'
-        # Stop container
         docker stop test-container
         docker rm test-container
