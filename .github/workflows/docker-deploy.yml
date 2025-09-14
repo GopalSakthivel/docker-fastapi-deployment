@@ -19,10 +19,15 @@ jobs:
         username: ${{ secrets.GHCR_USERNAME }}
         password: ${{ secrets.GHCR_TOKEN }}
 
+    - name: Set lowercase username
+      run: echo "USERNAME_LC=${GHCR_USERNAME,,}" >> $GITHUB_ENV
+      env:
+        GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+
     - name: Build Docker image
       run: |
-        docker build -t ghcr.io/${{ secrets.GHCR_USERNAME,, }}/fastapi-ml-app:latest .
+        docker build -t ghcr.io/${USERNAME_LC}/fastapi-ml-app:latest .
 
     - name: Push Docker image to GHCR
       run: |
-        docker push ghcr.io/${{ secrets.GHCR_USERNAME,, }}/fastapi-ml-app:latest
+        docker push ghcr.io/${USERNAME_LC}/fastapi-ml-app:latest
