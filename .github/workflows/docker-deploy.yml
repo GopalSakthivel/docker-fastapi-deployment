@@ -21,8 +21,8 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/fastapi-ml-app:latest .
+        docker build -t ghcr.io/${{ secrets.GHCR_USERNAME,, }}/fastapi-ml-app:latest .
 
     - name: Push Docker image to GHCR
       run: |
-        docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/fastapi-ml-app:latest
+        docker push ghcr.io/${{ secrets.GHCR_USERNAME,, }}/fastapi-ml-app:latest
